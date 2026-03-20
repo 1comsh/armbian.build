@@ -19,27 +19,22 @@ jobs:
 
       - name: Install Dependencies
         run: |
-         sudo apt-get update
-         sudo apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
-           squashfs-tools xz-utils lz4 zstd xorriso mtools rsync grub-efi-amd64-bin \
-           grub-pc-bin grub-common
-      - name: Install Dependencies Arm64
-        run: |
-         sudo apt-get update
-         sudo apt-get install -y \
-           qemu-user-static \
-           binfmt-support \
-           gcc-aarch64-linux-gnu \
-           g++-aarch64-linux-gnu \
-           build-essential
-           
+          sudo apt-get update
+          sudo apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
+            squashfs-tools xz-utils lz4 zstd xorriso mtools rsync grub-efi-amd64-bin \
+            grub-pc-bin grub-common qemu-user-static binfmt-support \
+            gcc-aarch64-linux-gnu g++-aarch64-linux-gnu build-essential
+
       - name: Download, Decompress and Build
         run: |
+          chmod +x compile.sh
           ./compile.sh build BOARD=armsom-sige1 BRANCH=vendor RELEASE=trixie \
            EXPERT=yes BUILD_DESKTOP=yes BUILD_MINIMAL=no \
            DESKTOP_APPGROUPS_SELECTED= DESKTOP_ENVIRONMENT=xfce \
            DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base \
-           KERNEL_BTF=no KERNEL_CONFIGURE=no KERNEL_GIT=shallow 
+           KERNEL_BTF=no KERNEL_CONFIGURE=no KERNEL_GIT=shallow \
+           DOCKER_ARMBIAN=no
+
       - name: Upload Armbian.iMG
         uses: actions/upload-artifact@v4
         with:

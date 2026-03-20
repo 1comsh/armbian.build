@@ -91,12 +91,13 @@ function prepare_partitions() {
 	DEFAULT_BOOTSIZE=256 # MiB
 	SECTOR_SIZE=${SECTOR_SIZE:-512}
 	# size of UEFI partition. 0 for no UEFI. Don't mix UEFISIZE>0 and BOOTSIZE>0
-	UEFISIZE=${UEFISIZE:-0}
+	#UEFISIZE=${UEFISIZE:-0}
+	UEFISIZE=40
 	BIOSSIZE=${BIOSSIZE:-0}
 	UEFI_MOUNT_POINT=${UEFI_MOUNT_POINT:-/boot/efi}
-	UEFI_FS_LABEL="${UEFI_FS_LABEL:-armbi_efi}"
-	ROOT_FS_LABEL="${ROOT_FS_LABEL:-armbi_root}"
-	BOOT_FS_LABEL="${BOOT_FS_LABEL:-armbi_boot}"
+	UEFI_FS_LABEL="${UEFI_FS_LABEL:-armefi}"
+	ROOT_FS_LABEL="${ROOT_FS_LABEL:-armroot}"
+	BOOT_FS_LABEL="${BOOT_FS_LABEL:-armboot}"
 
 	call_extension_method "pre_prepare_partitions" "prepare_partitions_custom" <<- 'PRE_PREPARE_PARTITIONS'
 		*allow custom options for mkfs*
